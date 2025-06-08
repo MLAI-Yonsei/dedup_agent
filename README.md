@@ -3,7 +3,7 @@ Code for deduplication agent based on MiniCPM, MinerU, Unisim, Fiftyone.
 
 ## Requirements
 ```
-Python==3.12
+Python==3.10
 ```
 
 ## Installation
