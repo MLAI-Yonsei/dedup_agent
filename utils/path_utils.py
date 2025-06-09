@@ -45,7 +45,8 @@ def cleanup_temp_dirs(cfg):
         cfg.TEXT_TEMP_DIR,
         cfg.IMAGE_FINAL_DIR,
         cfg.MINERU_INPUT_DIR,
-        cfg.MINERU_OUTPUT_DIR,
+        cfg.MINERU_OUTPUT_DIR_PASS1,
+        cfg.MINERU_OUTPUT_DIR_PASS2,
     ]
     for d in temp_dirs:
         if d.exists():
