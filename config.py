@@ -21,6 +21,8 @@ class Config:
     # --- 외부 도구 설정 ---
     # MiniCPM (VQA)
     MINICPM_MODEL_PATH: str = "/data1/doongsae/models/models--openbmb--MiniCPM-V-2_6/snapshots/4719557d673e9e2b4b3f083801626098f51441a8"
+    # MINICPM_MODEL_PATH: str = "/data1/doongsae/models/models--openbmb--MiniCPM-o-2_6/snapshots/1758aee77fc3fceafbe2522f79124eeb81b14873"
+
     # MinerU (Layout Parser)
     MINERU_BIN: str = "mineru_cli"
 
