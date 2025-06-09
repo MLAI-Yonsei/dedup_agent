@@ -24,7 +24,7 @@ Please refer to [MinerU Github Link](https://github.com/opendatalab/MinerU/blob/
 
 ## Usage
 ```
-python -m dedup_framework.main [target directory]
+python -m dedup_agent.main [target directory]
 ```
 
 ## Acknowledge
