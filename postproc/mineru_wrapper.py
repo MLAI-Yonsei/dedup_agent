@@ -47,7 +47,7 @@ class MinerUWrapper:
                 if not ori_file_dir.is_dir():
                     continue
                 
-                auto_dir = ori_file_dir / "auto"
+                auto_dir = ori_file_dir / "ocr"
                 if not auto_dir.is_dir():
                     continue
 
