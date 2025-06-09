@@ -16,7 +16,8 @@ class Config:
 
     # MinerU 임시 폴더
     MINERU_INPUT_DIR: Path = WORK_DIR / "mineru_input"
-    MINERU_OUTPUT_DIR: Path = WORK_DIR / "mineru_output"
+    MINERU_OUTPUT_DIR_PASS1: Path = WORK_DIR / "mineru_output_pass1"
+    MINERU_OUTPUT_DIR_PASS2: Path = WORK_DIR / "mineru_output_pass2"
 
     # --- 외부 도구 설정 ---
     # MiniCPM (VQA)
@@ -48,6 +49,7 @@ def ensure_dirs(cfg: "Config") -> None:
         cfg.TEXT_TEMP_DIR,
         cfg.TEXT_DEDUP_DIR,
         cfg.MINERU_INPUT_DIR,
-        cfg.MINERU_OUTPUT_DIR,
+        cfg.MINERU_OUTPUT_DIR_PASS1,
+        cfg.MINERU_OUTPUT_DIR_PASS2,
     ]:
         d.mkdir(parents=True, exist_ok=True)

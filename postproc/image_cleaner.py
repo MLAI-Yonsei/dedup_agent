@@ -40,19 +40,19 @@ class ImageCleaner:
             txt_path = self.cfg.TEXT_TEMP_DIR / f"mineru_{ts}_{idx}.txt"
             txt_path.write_text(txt, encoding="utf-8")
     
-    def _run_mineru_and_cleanup(self, files_to_parse: list[Path]) -> list[Path]:
+    def _run_mineru_and_cleanup(self, files_to_parse: list[Path], output_dir: Path) -> list[Path]:
         """[수정됨] 디렉토리 단위로 MinerU를 실행하고, 원본 파일을 삭제한 뒤 결과를 반환합니다."""
         if not files_to_parse:
             return []
 
         # 1. MinerU용 임시 디렉토리 초기화
-        in_dir, out_dir = self.cfg.MINERU_INPUT_DIR, self.cfg.MINERU_OUTPUT_DIR
+        in_dir = self.cfg.MINERU_INPUT_DIR
         if in_dir.exists():
             shutil.rmtree(in_dir)
-        if out_dir.exists():
-            shutil.rmtree(out_dir)
+        if output_dir.exists():
+            shutil.rmtree(output_dir)
         in_dir.mkdir()
-        out_dir.mkdir()
+        output_dir.mkdir()
 
         # 2. mixed 파일들을 임시 입력 디렉토리로 복사
         with progress_bar(files_to_parse, desc="Copying mixed files for MinerU") as pbar:
@@ -60,7 +60,7 @@ class ImageCleaner:
                 shutil.copy(f, in_dir / f.name)
 
         # 3. 디렉토리 단위로 MinerU 실행 및 결과 수집
-        all_subs = self.mineru.parse_dir(in_dir, out_dir)
+        all_subs = self.mineru.parse_dir(in_dir, output_dir)
         
         # 4. 파싱이 완료된 원본 mixed 파일들 삭제
         for f in files_to_parse:
@@ -82,7 +82,7 @@ class ImageCleaner:
             self.logger.info("No mixed files in Pass-1. Finishing.")
             return
 
-        subs1 = self._run_mineru_and_cleanup(mixed_files1)
+        subs1 = self._run_mineru_and_cleanup(mixed_files1, self.cfg.MINERU_OUTPUT_DIR_PASS1)
 
         if not subs1:
             self.logger.info("MinerU produced no sub-images in Pass-1. Finishing.")
@@ -104,7 +104,7 @@ class ImageCleaner:
             self.logger.info("No mixed files in Pass-2. Finishing.")
             return
 
-        subs2 = self._run_mineru_and_cleanup(mixed_files2)
+        subs2 = self._run_mineru_and_cleanup(mixed_files2, self.cfg.MINERU_OUTPUT_DIR_PASS2)
         
         # 2차 파싱에서 나온 최종 하위 이미지는 바로 최종 목적지로 이동
         self.logger.info("Moving %d sub-images from Pass-2 to final destination.", len(subs2))
