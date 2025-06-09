@@ -15,7 +15,7 @@ class PdfConverter:
         self.logger.info("Converting PDF → images: %s", pdf_path)
         doc = fitz.open(pdf_path)
         for page in doc:
-            pix = page.get_pixmap()
+            pix = page.get_pixmap(dpi=1200)
             out_path = self.cfg.TEMP1_DIR / f"{pdf_path.stem}_p{page.number + 1}.png"
             pix.save(out_path)
             self.logger.debug("Saved: %s", out_path)
